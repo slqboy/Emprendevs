@@ -1,0 +1,35 @@
+For Each Usuarios // Actualiza experiencia al usuario 
+
+	Where UsuarioId = &UsuarioId
+	
+	&NivelBase = UsuarioNivel //graba variable para comparar si subió de nivel
+	UsuarioPuntos += &Experience
+	
+EndFor
+
+
+
+For Each Usuarios   //Actualiza el nivel
+
+	Where UsuarioId = &UsuarioId
+	
+		For Each Niveles Order NivelPuntosDesde
+
+			Where NivelPuntosDesde > UsuarioPuntos
+		
+				&Nivel = NivelId - 1
+		
+				Exit
+		
+		EndFor
+
+	UsuarioNivel = &nivel
+	
+	
+EndFor
+
+If not &Nivelbase = &Nivel and not &Nivel = 1 //aplica si sube de nivel
+	
+	//Promocion.Popup(UserId) //Invocaría un popup que diga "felicidades <UsuarioNombre> has subido de nivel"
+	
+EndIf
