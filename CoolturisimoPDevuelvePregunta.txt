@@ -1,0 +1,118 @@
+//Recibe nivel (UsuarioID)
+//Busco categorías para el nivel del jugador
+For Each Usuarios
+
+	Where UsuarioId = &UsuarioId
+	
+	&nivel = UsuarioNivel
+
+EndFor
+int()
+
+For Each Categoria order CategoriaNivelMinimo //contar categorías para el random
+	
+	Where CategoriaNivelMinimo <= &nivel
+	
+		&contadorcategoria = count(categoriaid)
+		
+Endfor		
+
+&a = 1
+&b = &contadorcategoria
+&categoriaseleccionada = int(random() * (&b - &a + 1 )) + &a
+
+&contador2 = 0
+For Each Categoria order CategoriaNivelMinimo //contar categorías para el random
+	
+	Where CategoriaNivelMinimo <= &nivel
+	
+	&contador2 = &contador2 + 1
+	
+	if &contador2 = &categoriaseleccionada
+		&categoriaid = categoriaid
+		exit
+		
+	Endif
+
+		
+Endfor
+
+&lugarid1 = 0
+&lugarid2 = 0
+&lugarid3 = 0
+&lugarid4 = 0
+
+for &i = 1 to 4
+	
+	&repite = 'S'
+	
+	do while &repite = 'S' 
+		do 'variable lugar'
+		if &lugarid <> &lugarid1
+			if &lugarid <> &lugarid2
+				if &lugarid <> &lugarid3
+					if &lugarid <> &lugarid4
+						
+						&repite = 'N'
+					EndIf
+				Endif
+			Endif
+		EndIf
+	Enddo
+	do case
+		
+		case &i = 1
+			
+			&lugarid1 = &lugarid
+			
+		case &i = 2
+			
+			&lugarid2 = &lugarid
+			
+		case &i = 3
+			
+			&lugarid3 = &lugarid
+			
+		case &i = 4
+			
+			&lugarid4 = &lugarid
+			
+	endcase
+endfor
+
+&a = 1
+&b = 4
+&correcto = int(random() * (&b - &a + 1 )) + &a
+
+sub 'variable lugar'
+
+For Each Lugares order categoriaId // Obtiene cantidad de lugares
+	
+	where categoriaid = &categoriaid
+	
+	&lugarcontador = count(lugarid)
+	
+Endfor
+
+&a = 1
+&b = &lugarcontador
+&lugarseleccionado = int(random() * (&b - &a + 1 )) + &a
+
+
+&contador2 = 0
+
+For Each Lugares order categoriaId // Obtiene cantidad de lugares
+	
+	where categoriaid = &categoriaid
+	
+	&contador2 = &contador2 + 1
+	
+	if &contador2 = &lugarseleccionado
+		&lugarid = lugarid
+		exit
+		
+	Endif
+	
+Endfor
+
+endsub //'variable lugar'
